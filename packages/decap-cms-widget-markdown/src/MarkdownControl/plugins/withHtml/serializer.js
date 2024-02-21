@@ -1,5 +1,4 @@
-import { Transforms } from 'slate';
-import { jsx } from 'slate-hyperscript'
+import { jsx } from 'slate-hyperscript';
 
 const ELEMENT_TAGS = {
   A: el => ({ type: 'link', url: el.getAttribute('href') }),
@@ -16,10 +15,33 @@ const ELEMENT_TAGS = {
   P: () => ({ type: 'paragraph' }),
   PRE: () => ({ type: 'code' }),
   UL: () => ({ type: 'bulleted-list' }),
-  // TABLE: () => ({ type: 'table' }),
-  // TBODY: () => ({ type: 'table-body' }),
-  // TR: () => ({ type: 'table-row' }),
-  // TD: () => ({ type: 'table-cell' }),
+  TABLE: (el) => {
+    // console.log({el})
+    return { type: 'table' };
+  },
+
+
+  TR: (el) => {
+    // console.log(el)
+    return { type: 'table-row' };
+  },
+  TD: (el) => {
+    // console.log(el)
+    return { type: 'table-cell' };
+  },
+  TH: (el) => {
+    // console.log(el)
+    return { type: 'table-cell' };
+  },
+
+}
+
+
+const filters  = {
+  TABLE: ( child ) => {
+    return  ['THEAD', 'TBODY', 'TR', 'TH', 'TD'].includes(child.nodeName)
+  },
+  'default': () => true
 }
 
 // COMPAT: `B` is omitted here because Google Docs uses `<b>` in weird ways.
@@ -33,7 +55,7 @@ const TEXT_TAGS = {
   U: () => ({ underline: true }),
 }
 
-const deserialize = el => {
+export const deserialize = el => {
   if (el.nodeType === 3) {
     return el.textContent
   } else if (el.nodeType !== 1) {
@@ -52,7 +74,9 @@ const deserialize = el => {
   ) {
     parent = el.childNodes[0]
   }
-  let children = Array.from(parent.childNodes).map(deserialize).flat()
+
+  const filter = filters?.[el.nodeName] ?? filters?.default;
+  let children = Array.from(parent.childNodes).filter(filter).map(deserialize).flat();
 
   if (children.length === 0) {
     children = [{ text: '' }]
@@ -74,31 +98,3 @@ const deserialize = el => {
 
   return children
 }
-const withHtml = editor => {
-  const { insertData, isInline, isVoid } = editor;
-
-  editor.isInline = element => {
-    return element.type === 'link' ? true : isInline(element);
-  };
-
-  editor.isVoid = element => {
-    return element.type === 'image' ? true : isVoid(element);
-  };
-
-  editor.insertData = data => {
-    const html = data.getData('text/html');
-
-    if (html) {
-      const parsed = new DOMParser().parseFromString(html, 'text/html');
-      const fragment = deserialize(parsed.body);
-      Transforms.insertFragment(editor, fragment);
-      return;
-    }
-
-    insertData(data);
-  };
-
-  return editor;
-};
-
-export default withHtml;

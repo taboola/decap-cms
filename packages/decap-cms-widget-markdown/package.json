@@ -58,7 +58,7 @@
   "devDependencies": {
     "commonmark": "^0.30.0",
     "commonmark-spec": "^0.30.0",
-    "slate-hyperscript": "^0.77.0"
+    "slate-hyperscript": "^0.81.3"
   },
   "publishConfig": {
     "registry": "https://artifactory.taboolasyndication.com/artifactory/api/npm/npm/"
