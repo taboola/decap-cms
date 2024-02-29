@@ -14,8 +14,9 @@ const withHtml = editor => {
 
   editor.insertData = data => {
     const html = data.getData('text/html');
+    const slateFragment = data.getData('application/x-slate-fragment');
 
-    if (html) {
+    if (html && !slateFragment) {
       const parsed = new DOMParser().parseFromString(html.replaceAll('\n',''), 'text/html');
       const fragment = deserialize(parsed.body);
       Transforms.insertFragment(editor, fragment);
