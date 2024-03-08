@@ -51,7 +51,7 @@
     "decap-cms-widget-image": "^3.0.3",
     "decap-cms-widget-list": "^3.0.4",
     "decap-cms-widget-map": "^3.0.2",
-    "decap-cms-widget-markdown": "^3.0.3",
+    "@taboola/decap-cms-widget-markdown": "3.0.7",
     "decap-cms-widget-number": "^3.0.1",
     "decap-cms-widget-object": "^3.0.2",
     "decap-cms-widget-relation": "^3.0.3",
