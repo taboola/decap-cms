@@ -55,6 +55,12 @@ export default class StringControl extends React.Component {
         onChange={this.handleChange}
         onFocus={setActiveStyle}
         onBlur={setInactiveStyle}
+        onCopy={e => {
+          e.stopPropagation();
+        }}
+        onCut={e => {
+          e.stopPropagation();
+        }}
       />
     );
   }
