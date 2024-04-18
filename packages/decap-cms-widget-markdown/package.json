@@ -1,7 +1,7 @@
 {
   "name": "@taboola/decap-cms-widget-markdown",
   "description": "Widget for editing markdown in Decap CMS.",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "homepage": "https://www.decapcms.org/docs/widgets/#markdown",
   "repository": "https://github.com/decaporg/decap-cms/tree/master/packages/decap-cms-widget-markdown",
   "bugs": "https://github.com/decaporg/decap-cms/issues",
