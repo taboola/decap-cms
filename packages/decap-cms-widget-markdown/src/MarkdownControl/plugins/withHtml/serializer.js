@@ -62,7 +62,7 @@ export const deserialize = el => {
     return null
   } else if (el.nodeName === 'BR') {
     if (el.parentNode.nodeName === 'TD'){
-      return null
+      return ' '
     }
     return '\n'
   }
